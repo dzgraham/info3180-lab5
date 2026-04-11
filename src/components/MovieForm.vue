@@ -17,6 +17,7 @@
     </div>
 
     <form id="movieForm" @submit.prevent="saveMovie" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" :value="csrf_token" />
       <div class="form-group mb-3">
         <label for="title" class="form-label">Movie Title</label>
         <input 

@@ -8,17 +8,16 @@
     
     <div class="movies-grid">
       <div v-for="movie in movies" :key="movie.id" class="movie-card">
-        <div class="card h-100">
+        <div class="movie-poster">
           <img 
             :src="movie.poster" 
-            class="card-img-top" 
             :alt="movie.title"
             @error="handleImageError"
           />
-          <div class="card-body">
-            <h5 class="card-title">{{ movie.title }}</h5>
-            <p class="card-text">{{ movie.description }}</p>
-          </div>
+        </div>
+        <div class="movie-info">
+          <h3 class="movie-title">{{ movie.title }}</h3>
+          <p class="movie-description">{{ movie.description }}</p>
         </div>
       </div>
     </div>
@@ -29,6 +28,11 @@
 import { ref, onMounted } from "vue";
 
 let movies = ref([]);
+
+function handleImageError(event) {
+  console.error("Image failed to load:", event.target.src);
+  event.target.src = 'https://via.placeholder.com/120x160?text=No+Poster';
+}
 
 function fetchMovies() {
   fetch('/api/v1/movies')
@@ -42,10 +46,6 @@ function fetchMovies() {
     });
 }
 
-function handleImageError(event) {
-  event.target.src = 'https://via.placeholder.com/300x400?text=No+Poster';
-}
-
 onMounted(() => {
   fetchMovies();
 });
@@ -53,31 +53,55 @@ onMounted(() => {
 
 <style scoped>
 .movies-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 20px;
-  padding: 20px 0;
+}
+
+.movie-card {
+  display: flex;
+  border: 1px solid #ddd;
+  height: 250px;
 }
 
 .movie-card:hover {
-  outline: 2px solid #ccc;
+  background-color: #f9f9f9;
 }
 
-.card-img-top {
-  width: 100%;
-  height: 400px;
+.movie-poster {
+  width: 150px;
+  background: #eee;
 }
 
-.card-title {
-  font-size: 18px;
-  font-weight: 700;
+.movie-poster img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
 }
 
-.card-text {
-  font-size: 14px;
-  color: gray;
-  white-space: nowrap;
+.movie-info {
+  padding-left: 30px;
+  overflow: hidden;
+}
+
+.movie-title {
+  font-size: 22px;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  padding-top: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.movie-description {
+  font-size: 18px;
+  color: black;
+  overflow: hidden;
+}
+
+@media (max-width: 600px) {
+  .movies-grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

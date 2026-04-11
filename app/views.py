@@ -48,7 +48,7 @@ def add_movie():
         db.session.commit()
         
         return jsonify({
-            'message': 'Movie Info Successfully Added',
+            'message': 'Movie Successfully Uploaded',
             'title': movie.title,
             'poster': filename,
             'description': movie.description
@@ -56,9 +56,33 @@ def add_movie():
     
     return jsonify({'errors': form_errors(form)}), 400
 
+@app.route('/api/v1/movies', methods=['GET'])
+def get_movies():
+    """API endpoint to get all movies"""
+    movies = Movie.query.order_by(Movie.created_at.desc()).all()
+    movies_list = []
+    for movie in movies:
+        movies_list.append({
+            'id': movie.id,
+            'title': movie.title,
+            'description': movie.description,
+            'poster': f'/api/v1/posters/{movie.poster}',  # Full URL path
+            'created_at': movie.created_at.isoformat() if movie.created_at else None
+        })
+    
+    return jsonify({'movies': movies_list})
+
+@app.route('/api/v1/posters/<filename>')
+def get_poster(filename):
+    upload_folder = current_app.config['UPLOAD_FOLDER']
+    
+    try:
+        return send_from_directory(upload_folder, filename)
+    except FileNotFoundError:
+        return jsonify({'error': f'Image not found: {filename}'}), 404
+    
 @app.route('/api/v1/csrf-token', methods=['GET'])
-def get_csrf():
-    """Return CSRF token for VueJS frontend"""
+def get_csrf_token():
     return jsonify({'csrf_token': generate_csrf()})
 
 ###

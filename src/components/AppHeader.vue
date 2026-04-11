@@ -2,7 +2,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">VueJS with Flask</a>
+        <RouterLink class="navbar-brand" to="/">Graham</RouterLink>
         <button
           class="navbar-toggler"
           type="button"
@@ -17,16 +17,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link active">Home</RouterLink>
+              <RouterLink 
+                to="/" 
+                class="nav-link"
+                active-class="active"
+                exact-active-class="active"
+              >Home</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/about">About</RouterLink>
+              <RouterLink 
+                to="/about" 
+                class="nav-link"
+                active-class="active"
+              >About</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/movies">Movies</RouterLink>
+              <RouterLink 
+                to="/movies" 
+                class="nav-link"
+                active-class="active"
+              >Movies</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" to="/movies/create">Add Movie</RouterLink>
+              <RouterLink 
+                to="/movies/create" 
+                class="nav-link"
+                active-class="active"
+              >Add Movie</RouterLink>
             </li>
           </ul>
         </div>
@@ -40,5 +57,7 @@ import { RouterLink } from "vue-router";
 </script>
 
 <style>
-/* Add any component specific styles here */
+.nav-link.active {
+  font-weight: bold;
+}
 </style>

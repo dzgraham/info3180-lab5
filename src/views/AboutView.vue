@@ -1,7 +1,7 @@
 <template>
   <div class="about container">
     <h2>About</h2>
-    <p>This is an about page.</p>
+    <p>You can only look at the posters actually.</p>
   </div>
 </template>
 

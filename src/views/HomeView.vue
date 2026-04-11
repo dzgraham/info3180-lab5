@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 
-let message = ref("Hello World! This is a VueJS and Flask Starter Template.")
+let message = ref("Welcome to Graham's Movie Theatre!")
 
 </script>
 
