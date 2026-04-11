@@ -48,13 +48,18 @@ def add_movie():
         db.session.commit()
         
         return jsonify({
-            'message': 'Movie Successfully added',
+            'message': 'Movie Info Successfully Added',
             'title': movie.title,
             'poster': filename,
             'description': movie.description
         }), 201
     
     return jsonify({'errors': form_errors(form)}), 400
+
+@app.route('/api/v1/csrf-token', methods=['GET'])
+def get_csrf():
+    """Return CSRF token for VueJS frontend"""
+    return jsonify({'csrf_token': generate_csrf()})
 
 ###
 # The functions below should be applicable to all Flask apps.
@@ -92,9 +97,3 @@ def add_header(response):
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
-
-
-@app.errorhandler(404)
-def page_not_found(error):
-    """Custom 404 page."""
-    return render_template('404.html'), 404
