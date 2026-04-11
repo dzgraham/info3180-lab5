@@ -1,6 +1,5 @@
 # INFO3180 VueJS and Flask Starter
-
-This template should help get you started developing with Vue 3 on the frontend and Flask as an API on the backend.
+This is Lab 5 for Daniel Graham 620171166
 
 ## Recommended IDE Setup
 
